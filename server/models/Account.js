@@ -11,9 +11,7 @@ const accountSchema = new Schema({
 
     password: {
         type: String,
-        required: true,
-        minlength: 8,
-        maxlength: 20
+        required: true
     },
     
     isAdmin: {
@@ -34,11 +32,6 @@ const accountSchema = new Schema({
         {
             type: Schema.Types.ObjectId,
             ref: "Product",
-
-            quantity: {
-                type: Number,
-                default: 1
-            }
         }
     ],
 
@@ -50,7 +43,7 @@ const accountSchema = new Schema({
     ]
 });
 
-accountSchema.pre('save', async function(next) {
+accountSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
@@ -58,8 +51,8 @@ accountSchema.pre('save', async function(next) {
     next();
 });
     
-accountSchema.methods.isCorrectPassword = async (password) => {
-    return bcrypt.compare(password, this.password);
+accountSchema.methods.isCorrectPassword = async function(password)  {
+    return await bcrypt.compare(password, this.password);
 };
 
 const Account = model('Account', accountSchema);
