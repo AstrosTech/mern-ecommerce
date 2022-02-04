@@ -30,13 +30,14 @@ const typeDefs = gql`
         _id: ID
         name: String
         description: String
+        imageURL: String
         price: Float
         productId: String
         priceId: String
         purchases: [Purchases]
     }
 
-    type Shipping {
+    type Shipping { # Definition for purchase
         city: String
         country: String
         line1: String
@@ -71,10 +72,12 @@ const typeDefs = gql`
     type Mutation {
         addAccount(email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        createProduct(name: String!, description: String!, price: Float!): Product
+        createProduct(name: String!, description: String!, price: Float!, imageURL: String): Product
         archiveProduct(productId: String): Product # Cannot delete products through api, only able to archive ( soft delete )
         addToCart(accountId: String, productId: String): Account 
-        removeFromCart(accountId: String, productId: String, Amount: String): Account 
+        removeFromCart(accountId: String, productId: String): Account
+        removeProductFromCart(accountId: String, productId: String): Account # Removes entire product ( if they had multiple and want the all of them gone )
+        changeQuantity(accountId: String, productId: String, quantity: Int): Account
     }
 `
 

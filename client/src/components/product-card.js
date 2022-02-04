@@ -8,10 +8,12 @@ import {
     Icon,
     chakra,
     Tooltip,
+    Link
   } from '@chakra-ui/react';
   import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
   import { FiShoppingCart } from 'react-icons/fi';
-  
+  // import Auth from '../utils/auth'
+  // import { ADD_TO_CART } from '../utils/mutations';
   const data = {
     isNew: true,
     imageURL:
@@ -22,6 +24,9 @@ import {
   
   
   function ProductAddToCart() {
+    // const accountID = Auth.getAccount().data._id
+    // const [addToCart, { error, data }] = useMutation(ADD_TO_CART);
+
     return (
       <Flex p={50} w="full" alignItems="center" justifyContent="center">
         <Box
@@ -56,21 +61,22 @@ import {
               )}
             </Box>
             <Flex mt="1" justifyContent="space-between" alignContent="center">
-              <Box
+              <Link
+                to='/product-details'
                 fontSize="2xl"
                 fontWeight="semibold"
                 as="h4"
                 lineHeight="tight"
                 isTruncated>
                 {data.name}
-              </Box>
+              </Link>
               <Tooltip
                 label="Add to cart"
                 bg="white"
                 placement={'top'}
                 color={'gray.800'}
                 fontSize={'1.2em'}>
-                <chakra.a href={'#'} display={'flex'}>
+                <chakra.a href={'/cart'} display={'flex'}>
                   <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} />
                 </chakra.a>
               </Tooltip>

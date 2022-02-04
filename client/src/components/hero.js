@@ -4,6 +4,7 @@ import {
     Button,
     Text,
     VStack,
+    MenuItem,
     // useBreakpointValue,
   } from '@chakra-ui/react';
   
@@ -11,7 +12,7 @@ import {
     return (
       <Flex
         w={'full'}
-        h={'100vh'}
+        h={'70vh'}
         backgroundImage={
           'url(https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/streetwear-brands-1627934788.jpg)'
         }
@@ -30,20 +31,13 @@ import {
               Our new Spring/Summer Collection
             </Text>
             <Stack direction={'row'}>
-              <Button
-                bg={'blue.400'}
-                rounded={'full'}
-                color={'white'}
-                _hover={{ bg: 'blue.500' }}>
-                Buy
-              </Button>
-              <Button
-                bg={'whiteAlpha.300'}
-                rounded={'full'}
-                color={'white'}
-                _hover={{ bg: 'whiteAlpha.500' }}>
-                See product details
-              </Button>
+                <Button
+                  bg={'blue.400'}
+                  rounded={'full'}
+                  color={'white'}
+                  _hover={{ bg: 'blue.500' }}>
+                  Explore
+                </Button>
             </Stack>
           </Stack>
         </VStack>

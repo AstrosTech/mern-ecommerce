@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, Box, Flex, Text, Button, Stack } from "@chakra-ui/react";
-
+import { Link, Box, Flex, Text, Button, Stack, Icon } from "@chakra-ui/react";
+import { FiShoppingCart } from 'react-icons/fi';
 import Logo from "../logo";
 
 const NavBar = (props) => {
@@ -74,7 +74,10 @@ const MenuLinks = ({ isOpen }) => {
         pt={[4, 4, 0, 0]}
       >
         <MenuItem to="/">Home</MenuItem>
-        <MenuItem to="/how">Shop</MenuItem>
+        <MenuItem to="/products">Shop</MenuItem>
+        <MenuItem to="/cart">
+            <Icon as={FiShoppingCart}/>
+        </MenuItem>
         <MenuItem to="/signup" isLast>
           <Button
             size="sm"

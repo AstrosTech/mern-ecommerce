@@ -9,11 +9,11 @@ const resolvers = {
     Query: {
         /* Accounts */
         getAccount: async (parent, { accountId }) => {
-            return await Account.findById(accountId)
+            return await Account.findById(accountId).populate('purchases').populate('cart')
         },
 
         getAllAccounts: async () => {
-          return await Account.find({})
+          return await Account.find({}).populate('purchases').populate('cart')
         },
         
         /* Products */
@@ -40,8 +40,6 @@ const resolvers = {
             let cart = await formatCart(account.cart)
 
             let stringedCart = JSON.stringify(account.cart.map((item) => { return item._id }))
-
-            console.log(stringedCart)
             const session = await stripe.checkout.sessions.create({
               mode: "payment",
               success_url: `${process.env.BASE_URL}success`,
@@ -69,7 +67,7 @@ const resolvers = {
         },
 
         login: async (parent, { email, password }) => {
-            const user = await Account.findOne({ email });
+            const user = await Account.findOne({ email })
       
             if (!user) {
               throw new AuthenticationError('No user found with this email address');
@@ -87,7 +85,7 @@ const resolvers = {
         },
 
         /* Stripe */
-        createProduct: async (parent, { name, description, price }) => {
+        createProduct: async (parent, { name, description, price, imageURL }) => {
           const stripeProduct = await stripe.products.create({
             name: name,
             description: description,
@@ -109,6 +107,7 @@ const resolvers = {
           let savedProduct = await Product.create({
             name,
             description,
+            imageURL,
             price,
             productId: stripeProduct.id,
             priceId: stripePrice.id
@@ -131,9 +130,22 @@ const resolvers = {
 
         removeFromCart: async (parent, { accountId, productId }) => {
           let account = await Account.findById(accountId)
-          account.cart = account.cart.filter((i => v => v !== 2 || --i)(1));
+          account.cart = account.cart.filter((i => v => v !== productId || --i)(1));
 
           return await account.save()
+        },
+
+        removeProductFromCart: async (parent, { accountId, productId }) => {
+          return await Account.findOneAndUpdate({ _id: accountId }, { $pull: { cart: productId }}).populate('purchases').populate('cart')
+        },
+
+        changeQuantity: async (parent, { accountId, productId, quantity }) => {
+          await Account.findOneAndUpdate({ _id: accountId }, { $pull: { cart: productId }})
+
+          let products = []
+          for (let i = 0; i < quantity.length; i++) { products.push(productId) }
+
+          return await Account.findOneAndUpdate({ _id: accountId }, { $push: { cart: { $each: products } }}).populate('purchases').populate('cart')
         }
     }
 }

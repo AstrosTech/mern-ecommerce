@@ -12,6 +12,11 @@ const productSchema = new Schema({
         required: "No Product Description Provided"
     },
 
+    imageURL: {
+        type: String,
+        required: "No Product Image Provided"
+    },
+
     price: {
         type: Number,
         required: "No Product Price Provided"
