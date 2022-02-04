@@ -18,15 +18,16 @@ import {
   } from '@chakra-ui/react';
   import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
   import { MdLocalShipping } from 'react-icons/md';
-  
+//   import Product from './products';
 
-  const data = {
-    imageURL:
-      'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
-    name: 'Wayfarer Classic',
-    price: 4.5
-  };
-
+//   const data = {
+//     imageURL:
+//       'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
+//     name: 'Wayfarer Classic',
+//     price: 4.5,
+//     description: 'Ray-Ban Original Wayfarer Classics are the most recognizable style in the history of sunglasses. Since its initial design in 1952, Wayfarer Classics gained popularity among celebrities, musicians, artists and those with an impeccable fashion sense.',
+//   };
+import Product from '../../../server/models/Product';
 
   export default function Simple() {
     return (
@@ -54,13 +55,13 @@ import {
                 lineHeight={1.1}
                 fontWeight={600}
                 fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}>
-                {data.name}
+                {Product.name}
               </Heading>
               <Text
                 color={useColorModeValue('gray.900', 'gray.400')}
                 fontWeight={300}
                 fontSize={'2xl'}>
-                {data.price}
+                {Product.price}
               </Text>
             </Box>
   
@@ -73,18 +74,8 @@ import {
                 />
               }>
               <VStack spacing={{ base: 4, sm: 6 }}>
-                <Text
-                  color={useColorModeValue('gray.500', 'gray.400')}
-                  fontSize={'2xl'}
-                  fontWeight={'300'}>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                  diam nonumy eirmod tempor invidunt ut labore
-                </Text>
                 <Text fontSize={'lg'}>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-                  aliquid amet at delectus doloribus dolorum expedita hic, ipsum
-                  maxime modi nam officiis porro, quae, quisquam quos
-                  reprehenderit velit? Natus, totam.
+                    {Product.description}
                 </Text>
               </VStack>
               <Box>
